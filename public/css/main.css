@@ -1,30 +1,150 @@
-html, body {
-    background-color: lightblue;
-    font-family: Arial, sans-serif;
+/* =========================================
+   COLOR VARIABLES (Accessibility & Standard)
+   ========================================= */
+:root {
+    --primary-color: #004d99;      /* Dark professional blue */
+    --primary-hover: #003366;      /* Darker blue for hover/focus */
+    --bg-light: #f8f9fa;           /* Very light gray background */
+    --card-bg: #ffffff;            /* White background for main area */
+    --text-dark: #212529;          /* Almost black text (better contrast) */
+    --text-light: #ffffff;         /* White text for dark backgrounds */
+}
+
+/* =========================================
+   RESET & BASE STYLES
+   ========================================= */
+* {
+    box-sizing: border-box;
     margin: 0;
-    padding: 20px;
+    padding: 0;
 }
 
 body {
-    nav {
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--bg-light);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Keeps footer at the bottom */
+}
 
-        li {
-            display: inline;
-            margin-right: 15px;
-        }
+h1, h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
 
-        a {
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
+p {
+    margin-bottom: 1rem;
+}
 
-            &:hover {
-                color: #0066cc;
-            }
-        }
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* =========================================
+   HEADER & NAVIGATION
+   ========================================= */
+nav {
+    background-color: var(--primary-color);
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column; /* Mobile-first: stack links vertically */
+    gap: 0.5rem;
+    align-items: stretch;
+}
+
+nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    display: block;
+    width: 100%; /* Full width on mobile */
+    text-align: center;
+}
+
+/* Accessibility: Hover and focus (keyboard) states */
+nav a:hover, 
+nav a:focus {
+    background-color: var(--primary-hover);
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+}
+
+/* Responsiveness: Screens larger than 600px (Desktop) */
+@media (min-width: 600px) {
+    nav ul {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
     }
-}                
+    nav a {
+        width: auto;
+        min-width: 140px; /* Standardized button width on desktop */
+    }
+}
+
+/* =========================================
+   MAIN CONTENT
+   ========================================= */
+main {
+    flex: 1; /* Fills space between nav and footer */
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.main-logo {
+    display: block;
+    margin: 2rem auto;
+    max-width: 350px;
+}
+
+/* =========================================
+   LISTS (Organizations, Projects, and Categories)
+   ========================================= */
+main ul {
+    list-style: none;
+    margin-top: 1.5rem;
+}
+
+main ul li {
+    background-color: var(--bg-light);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 6px;
+    border-left: 4px solid var(--primary-color); /* Professional touch */
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+main ul li img {
+    max-width: 60px;
+    border-radius: 4px;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+footer {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: auto;
+}
