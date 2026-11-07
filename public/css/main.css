@@ -130,12 +130,13 @@ main ul li {
     border-left: 4px solid var(--primary-color); /* Professional touch */
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    /* gap: 1.5rem; */
 }
 
 main ul li img {
     max-width: 60px;
     border-radius: 4px;
+    margin-right: 1.5rem;
 }
 
 /* =========================================

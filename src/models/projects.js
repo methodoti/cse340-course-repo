@@ -1,0 +1,15 @@
+import db from './db.js'
+
+const getAllProjects = async() => {
+    const query = `
+        SELECT project_id, title, date, organization.name AS organization_name
+        FROM project
+            JOIN organization ON project.organization_id = organization.organization_id;
+    `;
+
+    const result = await db.query(query);
+
+    return result.rows;
+}
+
+export { getAllProjects }
