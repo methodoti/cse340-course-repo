@@ -56,3 +56,54 @@ VALUES
 (3, 'Beach Cleanup Morning', 'Walking the coastline to collect plastic waste and debris after the stormy season.', 'Sunset Beach', '2027-04-18'),
 (3, 'After-School Tutoring', 'Providing math and reading assistance to middle school students.', 'Lincoln Middle School', '2027-05-25');
 
+-- ========================================
+-- Category Table
+-- ========================================
+CREATE TABLE category (
+	category_id SERIAL PRIMARY KEY,
+	name VARCHAR(100) NOT NULL
+);
+
+-- ========================================
+-- Project Category Linking Table
+-- ========================================
+CREATE TABLE project_category (
+	project_id INT NOT NULL REFERENCES project(project_id),
+	category_id INT NOT NULL REFERENCES category(category_id),
+	PRIMARY KEY (project_id, category_id)
+);
+
+-- ========================================
+-- Insert sample data: Categories
+-- ========================================
+INSERT INTO category (name)
+VALUES
+('Construction'),
+('Gardening'),
+('Education'),
+('Community Service'),
+('Environmental Cleanup');
+
+-- ================================================================
+-- Insert sample data: Project Categories Linking Table
+-- ================================================================
+INSERT INTO project_category (project_id, category_id)
+VALUES
+-- BrightFuture Builders Projects
+(1, 1), -- Park Pavilion Construction: Construction
+(2, 1), -- Playground Equipment Repair: Construction
+(3, 1), -- Community Center Ramp: Construction
+(4, 1), -- Bus Stop Shelter Renovation: Construction
+(5, 1), -- Library Bookshelf Assembly: Construction
+-- GreenHarvest Growers Projects
+(6, 2), -- Spring Seedling Planting: Gardening
+(7, 2), -- Compost Bin Construction: Gardening
+(8, 2), -- Rainwater Harvesting Setup: Gardening
+(9, 2), -- Neighborhood Weeding Day: Gardening
+(10, 2), -- Fall Harvest and Distribution: Gardening
+-- UnityServe Volunteers Projects
+(11, 3), -- Food Pantry Organization: Education
+(12, 3), -- Winter Coat Drive: Education	
+(13, 3), -- Senior Center Tech Help: Education
+(14, 5), -- Beach Cleanup Morning: Environmental Cleanup
+(15, 3); -- After-School Tutoring: Education
