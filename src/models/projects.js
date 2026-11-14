@@ -4,7 +4,8 @@ const getAllProjects = async() => {
     const query = `
         SELECT project_id, title, date, organization.name AS organization_name
         FROM project
-            JOIN organization ON project.organization_id = organization.organization_id;
+            JOIN organization
+                ON project.organization_id = organization.organization_id;
     `;
 
     const result = await db.query(query);
@@ -12,4 +13,25 @@ const getAllProjects = async() => {
     return result.rows;
 }
 
-export { getAllProjects }
+const getProjectsByOrganizationId = async (organizationId) => {
+    const query = `
+        SELECT
+            project_id,
+            organization_id,
+            title,
+            description,
+            location,
+            date
+        FROM project
+        WHERE organization_id = $1
+        ORDER BY date;
+    `;
+
+    const queryParams = [organizationId];
+    const result = await db.query(query, queryParams);
+
+    return result.rows;
+};
+
+// Export the model functions
+export { getAllProjects, getProjectsByOrganizationId };
