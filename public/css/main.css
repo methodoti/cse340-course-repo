@@ -127,10 +127,12 @@ main ul li {
     margin-bottom: 1rem;
     padding: 1rem;
     border-radius: 6px;
-    border-left: 4px solid var(--primary-color); /* Professional touch */
+    border-left: 4px solid var(--primary-color);
+}
+
+main ul li:has(img) {
     display: flex;
     align-items: center;
-    /* gap: 1.5rem; */
 }
 
 main ul li img {
