@@ -106,4 +106,5 @@ VALUES
 (12, 3), -- Winter Coat Drive: Education	
 (13, 3), -- Senior Center Tech Help: Education
 (14, 5), -- Beach Cleanup Morning: Environmental Cleanup
-(15, 3); -- After-School Tutoring: Education
+(15, 3), -- After-School Tutoring: Education
+(15, 4); -- After-School Tutoring: Community Service
