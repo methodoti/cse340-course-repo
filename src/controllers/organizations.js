@@ -56,10 +56,10 @@ const showNewOrganizationForm = async (req, res) => {
 
 const processNewOrganizationForm = async (req, res) => {
     // Check for validation errors
-    const results = validationResult(req);
-    if (!results.isEmpty()) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
         // Validation failed - loop through errors
-        results.array().forEach((error) => {
+        errors.array().forEach((error) => {
             req.flash('error', error.msg);
         });
         // Redirect back to the new organization form
@@ -89,10 +89,10 @@ const showEditOrganizationForm = async (req, res) => {
 
 const processEditOrganizationForm = async (req, res) => {
     // Check for validation errors
-    const results = validationResult(req);
-    if (!results.isEmpty()) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
         // Validation failed - loop through errors
-        results.array().forEach((error) => {
+        errors.array().forEach((error) => {
             req.flash('error', error.msg);
         });
         // Redirect back to the edit organization form
