@@ -9,10 +9,16 @@
     <p>Location: <%= projectDetails.location %></p>
     <p>Partner Organization: <a href="/organization/<%= projectDetails.organization_id %>"><%= projectDetails.organization_name %></a></p>
 
+    
+
     <p>Categories:</p>
+    <p>
         <% categories.forEach(category => { %>
             <a href="/category/<%= category.category_id %>">#<%= category.name.toLowerCase() %></a>
         <% }); %>
+    </p>
+    <p><a href="/assign-categories/<%= projectDetails.project_id %>">Edit Categories</a></p>
+    
 </main>
 
 <%- include('partials/footer') %>
