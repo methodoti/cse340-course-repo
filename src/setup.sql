@@ -108,3 +108,32 @@ VALUES
 (14, 5), -- Beach Cleanup Morning: Environmental Cleanup
 (15, 3), -- After-School Tutoring: Education
 (15, 4); -- After-School Tutoring: Community Service
+
+-- ========================================
+-- Roles Table
+-- ========================================
+CREATE TABLE roles (
+	role_id SERIAL PRIMARY KEY,
+	role_name VARCHAR(50) UNIQUE NOT NULL,
+	role_description TEXT
+);
+
+-- ========================================
+-- Insert sample data: Roles
+-- ========================================
+INSERT INTO roles (role_name, role_description)
+VALUES
+('user', 'Standard user with basic access'),
+('admin', 'Administrator with full system access');
+
+-- ========================================
+-- Users Table
+-- ========================================
+CREATE TABLE users (
+	user_id SERIAL PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	email VARCHAR(100) UNIQUE NOT NULL,
+	password_hash VARCHAR(255) NOT NULL,
+	role_id INT REFERENCES roles(role_id),
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
