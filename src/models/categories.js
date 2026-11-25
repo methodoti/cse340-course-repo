@@ -70,7 +70,7 @@ const updateCategoryAssignments = async (projectId, categoryIds) => {
 /**
  * Creates a new category in the database.
  * @param {string} name - The name of the category.
- * @returns {string} The id of the newly created category record.
+ * @returns {number} The id of the newly created category record.
  */
 const createCategory = async (name) => {
     const query = `
