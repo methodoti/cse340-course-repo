@@ -34,7 +34,11 @@ import { testErrorPage } from './controllers/errors.js';
 import {
     showUserRegistrationForm,
     processUserRegistrationForm,
-    userRegistrationValidation
+    userRegistrationValidation,
+    showLoginForm,
+    processLoginForm,
+    processLogout,
+    loginValidation
 } from './controllers/users.js';
 
 // import { showOrganizationDetailsPage } from './controllers/organizations.js';
@@ -83,6 +87,11 @@ router.post('/edit-category/:id', categoryValidation, processEditCategoryForm);
 // User registration routes
 router.get('/register', showUserRegistrationForm);
 router.post('/register', userRegistrationValidation, processUserRegistrationForm);
+// User login routes
+router.get('/login', showLoginForm);
+router.post('/login', loginValidation, processLoginForm);
+// User logout route
+router.get('/logout', processLogout);
 
 // error-handling routes
 router.get('/test-error', testErrorPage);

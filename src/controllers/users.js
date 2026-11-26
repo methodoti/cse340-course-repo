@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { createUser } from '../models/users.js';
+import { createUser, authenticateUser } from '../models/users.js';
 import { body, validationResult } from 'express-validator';
 
 // Define validation and sanitization rules for user registration form
@@ -25,6 +25,25 @@ const userRegistrationValidation = [
         .withMessage('Password is required')
         .isLength({ min: 6, max: 72 })
         .withMessage('Password must be between 6 and 72 characters long')
+];
+
+// Define validation and sanitization rules for login form
+const loginValidation = [
+    body('email')
+        .trim() 
+        .notEmpty()
+        .withMessage('Email is required')
+        .isEmail()
+        .withMessage('Please provide a valid email address')
+        .isLength({ max: 100 })
+        .withMessage('Email cannot exceed 100 characters')
+        .toLowerCase(), 
+        // .normalizeEmail(), 
+    body('password')
+        .notEmpty()
+        .withMessage('Password is required')
+        .isLength({ max: 72 })
+        .withMessage('Invalid email or password. Please try again.')
 ];
 
 const showUserRegistrationForm = (req, res) => {
@@ -64,4 +83,65 @@ const processUserRegistrationForm = async (req, res) => {
     }
 };
 
-export { showUserRegistrationForm, processUserRegistrationForm, userRegistrationValidation };
+const showLoginForm = async (req, res) => {
+    const title = 'User Login';
+    res.render('login', { title });
+};
+
+const processLoginForm = async (req, res) => {
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        // Validation failed - loop through errors
+        errors.array().forEach((error) => {
+            req.flash('error', error.msg);
+        });
+        // Redirect back to the login form
+        return res.redirect('/login');
+    }
+
+    const { email, password } = req.body;
+
+    try {
+        // Call the model function to authenticate the user
+        const user = await authenticateUser(email, password);
+
+        if (user) {
+            // Authentication successful - store user info in session
+            req.session.user = user;
+            req.flash('success', 'Login successful!');
+            if (res.locals.NODE_ENV === 'development') {
+                console.log('User logged in:', user);
+            }
+            res.redirect('/'); // Redirect to a protected route after login
+        } else {
+            // Authentication failed - invalid credentials
+            req.flash('error', 'Invalid email or password. Please try again.');
+            res.redirect('/login');
+        }
+    } catch (error) {
+        console.error('Error during login:', error);
+        req.flash('error', 'An error occurred during login. Please try again.');
+        res.redirect('/login');
+    }
+};
+
+const processLogout = async (req, res) => {
+    // Destroy the session to log out the user
+    if (req.session.user) {
+        delete req.session.user;
+    }
+
+    req.flash('success', 'You have been logged out successfully.');
+    res.redirect('/login'); // Redirect to the login page after logout
+};
+
+export {
+    showUserRegistrationForm,
+    processUserRegistrationForm,
+    userRegistrationValidation,
+    showLoginForm,
+    processLoginForm,
+    processLogout,
+    loginValidation
+};
