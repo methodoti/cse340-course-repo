@@ -113,7 +113,7 @@ const processLoginForm = async (req, res) => {
             if (res.locals.NODE_ENV === 'development') {
                 console.log('User logged in:', user);
             }
-            res.redirect('/'); // Redirect to a protected route after login
+            res.redirect('/dashboard'); // Redirect to a protected route after login
         } else {
             // Authentication failed - invalid credentials
             req.flash('error', 'Invalid email or password. Please try again.');
@@ -136,6 +136,22 @@ const processLogout = async (req, res) => {
     res.redirect('/login'); // Redirect to the login page after logout
 };
 
+const requireLogin = async (req, res, next) => {
+    if (!req.session || !req.session.user) {
+        req.flash('error', 'You must be logged in to access that page.');
+        return res.redirect('/login');
+    }
+    next();
+}; 
+
+const showDashboard = (req, res) => {
+    const user = req.session.user;
+    const name = user.name;
+    const email = user.email;
+    const title = 'User Details';
+    res.render('dashboard', { title, name, email });
+};
+
 export {
     showUserRegistrationForm,
     processUserRegistrationForm,
@@ -143,5 +159,7 @@ export {
     showLoginForm,
     processLoginForm,
     processLogout,
-    loginValidation
+    loginValidation,
+    requireLogin,
+    showDashboard
 };

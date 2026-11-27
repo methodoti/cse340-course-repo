@@ -38,7 +38,9 @@ import {
     showLoginForm,
     processLoginForm,
     processLogout,
-    loginValidation
+    loginValidation,
+    requireLogin,
+    showDashboard
 } from './controllers/users.js';
 
 // import { showOrganizationDetailsPage } from './controllers/organizations.js';
@@ -92,6 +94,8 @@ router.get('/login', showLoginForm);
 router.post('/login', loginValidation, processLoginForm);
 // User logout route
 router.get('/logout', processLogout);
+// Dashboard route (protected)
+router.get('/dashboard', requireLogin, showDashboard);
 
 // error-handling routes
 router.get('/test-error', testErrorPage);
