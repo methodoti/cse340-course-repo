@@ -64,6 +64,8 @@ app.use((req, res, next) => {
   if (req.session && req.session.user) {
       res.locals.isLoggedIn = true;
   }
+  // Make user session data available to templates
+  res.locals.user = req.session.user || null; 
   
   res.locals.NODE_ENV = NODE_ENV;
   next();
